@@ -75,7 +75,7 @@ func TestEmbed_Success(t *testing.T) {
 		resp := mockEmbeddingResponse{}
 		resp.Embedding.Values = expectedEmbedding
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
@@ -119,7 +119,7 @@ func TestEmbed_InvalidAPIKey(t *testing.T) {
 		resp.Error.Code = 401
 		resp.Error.Message = "API key not valid"
 		resp.Error.Status = "UNAUTHENTICATED"
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
@@ -152,7 +152,7 @@ func TestEmbedBatch_Success(t *testing.T) {
 			resp.Embeddings[i].Values = emb
 		}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
