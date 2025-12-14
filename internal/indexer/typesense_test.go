@@ -263,7 +263,7 @@ func TestSearch_ReturnsResults(t *testing.T) {
 					},
 				},
 			}
-			json.NewEncoder(w).Encode(response)
+			_ = json.NewEncoder(w).Encode(response)
 			return
 		}
 		w.WriteHeader(http.StatusNotFound)
@@ -303,7 +303,7 @@ func TestSearch_EmptyResults(t *testing.T) {
 					},
 				},
 			}
-			json.NewEncoder(w).Encode(response)
+			_ = json.NewEncoder(w).Encode(response)
 			return
 		}
 		w.WriteHeader(http.StatusNotFound)
@@ -338,7 +338,7 @@ func TestSearch_TextOnlySearch(t *testing.T) {
 					},
 				},
 			}
-			json.NewEncoder(w).Encode(response)
+			_ = json.NewEncoder(w).Encode(response)
 			return
 		}
 		w.WriteHeader(http.StatusNotFound)
