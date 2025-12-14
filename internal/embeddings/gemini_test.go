@@ -213,7 +213,7 @@ func TestEmbed_RateLimiting(t *testing.T) {
 		resp := mockEmbeddingResponse{}
 		resp.Embedding.Values = []float32{0.1, 0.2, 0.3}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
@@ -256,14 +256,14 @@ func TestEmbed_RetryOn429(t *testing.T) {
 			resp.Error.Code = 429
 			resp.Error.Message = "Resource exhausted"
 			resp.Error.Status = "RESOURCE_EXHAUSTED"
-			json.NewEncoder(w).Encode(resp)
+			_ = json.NewEncoder(w).Encode(resp)
 			return
 		}
 		// Third request succeeds
 		resp := mockEmbeddingResponse{}
 		resp.Embedding.Values = []float32{0.1, 0.2, 0.3}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
@@ -296,14 +296,14 @@ func TestEmbed_RetryOn503(t *testing.T) {
 			resp.Error.Code = 503
 			resp.Error.Message = "Service unavailable"
 			resp.Error.Status = "UNAVAILABLE"
-			json.NewEncoder(w).Encode(resp)
+			_ = json.NewEncoder(w).Encode(resp)
 			return
 		}
 		// Second request succeeds
 		resp := mockEmbeddingResponse{}
 		resp.Embedding.Values = []float32{0.1, 0.2, 0.3}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
@@ -335,7 +335,7 @@ func TestEmbed_MaxRetriesExceeded(t *testing.T) {
 		resp.Error.Code = 503
 		resp.Error.Message = "Service unavailable"
 		resp.Error.Status = "UNAVAILABLE"
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
@@ -365,7 +365,7 @@ func TestEmbed_NonRetryableError(t *testing.T) {
 		resp.Error.Code = 400
 		resp.Error.Message = "Invalid request"
 		resp.Error.Status = "INVALID_ARGUMENT"
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
@@ -389,7 +389,7 @@ func TestEmbed_ContextCancellation(t *testing.T) {
 		time.Sleep(5 * time.Second) // Simulate slow response
 		resp := mockEmbeddingResponse{}
 		resp.Embedding.Values = []float32{0.1, 0.2, 0.3}
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
@@ -414,7 +414,7 @@ func TestEmbed_APIKeyInHeader(t *testing.T) {
 		resp := mockEmbeddingResponse{}
 		resp.Embedding.Values = []float32{0.1, 0.2, 0.3}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer server.Close()
 
