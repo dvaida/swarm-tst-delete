@@ -15,6 +15,9 @@ bin/
 # Dependency directories
 vendor/
 
+# Go workspace file
+go.work
+
 # IDE
 .idea/
 .vscode/
@@ -33,3 +36,6 @@ Thumbs.db
 *.pem
 *.key
 credentials.*
+
+# Project specific
+.swarm-indexer-metadata.json

@@ -7,7 +7,7 @@ test:
 	go test ./...
 
 lint:
-	go vet ./...
+	golangci-lint run
 
 clean:
 	rm -rf bin/
