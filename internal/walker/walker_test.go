@@ -311,7 +311,7 @@ func TestWalk_PermissionErrorsHandledGracefully(t *testing.T) {
 	}
 	// Restore permissions on cleanup
 	t.Cleanup(func() {
-		os.Chmod(filepath.Join(tmpDir, "unreadable_dir"), 0755)
+		_ = os.Chmod(filepath.Join(tmpDir, "unreadable_dir"), 0755)
 	})
 
 	ch, err := walker.Walk(tmpDir)

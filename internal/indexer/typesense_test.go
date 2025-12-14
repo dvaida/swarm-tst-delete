@@ -55,14 +55,14 @@ func TestEnsureCollection_CreatesIfNotExists(t *testing.T) {
 		if r.Method == "GET" && strings.HasPrefix(r.URL.Path, "/collections/") {
 			// Collection doesn't exist
 			w.WriteHeader(http.StatusNotFound)
-			json.NewEncoder(w).Encode(map[string]string{"message": "Not Found"})
+			_ = json.NewEncoder(w).Encode(map[string]string{"message": "Not Found"})
 			return
 		}
 		if r.Method == "POST" && r.URL.Path == "/collections" {
 			createdCollection = true
 			w.WriteHeader(http.StatusCreated)
-			json.NewEncoder(w).Encode(map[string]interface{}{
-				"name":       "test-collection",
+			_ = json.NewEncoder(w).Encode(map[string]interface{}{
+				"name":          "test-collection",
 				"num_documents": 0,
 			})
 			return
@@ -93,8 +93,8 @@ func TestEnsureCollection_AlreadyExists(t *testing.T) {
 			collectionRequested = true
 			// Collection exists
 			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode(map[string]interface{}{
-				"name":       "test-collection",
+			_ = json.NewEncoder(w).Encode(map[string]interface{}{
+				"name":          "test-collection",
 				"num_documents": 10,
 			})
 			return
@@ -130,7 +130,7 @@ func TestUpsertChunks_SingleChunk(t *testing.T) {
 			upsertCalled = true
 			w.WriteHeader(http.StatusOK)
 			// JSONL response for import
-			w.Write([]byte(`{"success":true}`))
+			_, _ = w.Write([]byte(`{"success":true}`))
 			return
 		}
 		w.WriteHeader(http.StatusNotFound)
@@ -193,7 +193,7 @@ func TestUpsertChunks_MultipleBatches(t *testing.T) {
 			batchCount++
 			w.WriteHeader(http.StatusOK)
 			// Return success for each document in batch
-			w.Write([]byte(`{"success":true}` + "\n" + `{"success":true}`))
+			_, _ = w.Write([]byte(`{"success":true}` + "\n" + `{"success":true}`))
 			return
 		}
 		w.WriteHeader(http.StatusNotFound)

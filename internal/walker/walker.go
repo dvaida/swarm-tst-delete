@@ -121,7 +121,7 @@ func Walk(root string) (<-chan FileInfo, error) {
 			return nil
 		}
 
-		walkFn(absRoot)
+		_ = walkFn(absRoot)
 	}()
 
 	return ch, nil
