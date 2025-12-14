@@ -372,7 +372,7 @@ func TestDeleteByPath_RemovesDocuments(t *testing.T) {
 				t.Errorf("expected filter_by to contain file_path, got: %s", filterBy)
 			}
 			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode(map[string]int{"num_deleted": 3})
+			_ = json.NewEncoder(w).Encode(map[string]int{"num_deleted": 3})
 			return
 		}
 		w.WriteHeader(http.StatusNotFound)
@@ -398,7 +398,7 @@ func TestDeleteByPath_NoMatchingDocs(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "DELETE" && strings.Contains(r.URL.Path, "/documents") {
 			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode(map[string]int{"num_deleted": 0})
+			_ = json.NewEncoder(w).Encode(map[string]int{"num_deleted": 0})
 			return
 		}
 		w.WriteHeader(http.StatusNotFound)
